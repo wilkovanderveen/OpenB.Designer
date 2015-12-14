@@ -51,22 +51,22 @@
         }
 
         .context-menu-list {
-    position: absolute;
-    display: inline-block;
-    min-width: 180px;
-    max-width: 360px;
-    padding: 4px 0;
-    margin: 5px;
-    font-family: inherit;
-    font-size: inherit;
-    white-space: pre;
-    list-style-type: none;
-    background: #fff;
-    border: 1px solid #bebebe;
-    border-radius: 3px;
-    -webkit-box-shadow: 0 2px 5px rgba(0,0,0,.5);
-    box-shadow: 0 2px 5px rgba(0,0,0,.5);
-}
+            position: absolute;
+            display: inline-block;
+            min-width: 180px;
+            max-width: 360px;
+            padding: 4px 0;
+            margin: 5px;
+            font-family: inherit;
+            font-size: inherit;
+            white-space: pre;
+            list-style-type: none;
+            background: #fff;
+            border: 1px solid #bebebe;
+            border-radius: 3px;
+            -webkit-box-shadow: 0 2px 5px rgba(0,0,0,.5);
+            box-shadow: 0 2px 5px rgba(0,0,0,.5);
+        }
 
     </style>
 </head>
@@ -99,7 +99,6 @@
 
         $.contextMenu({
             selector: '.model-context-menu',
-            appendTo: 'div.model',
             callback: function (key, options) {
                 var m = "clicked: " + key;
                 window.console && console.log(m) || alert(m);
@@ -134,7 +133,11 @@
             });
 
             $("#createNewModelButton").on("click", function() {
-                $("#workspace").append("<div class='model-context-menu model'><div class='header'><span>Model</span><div></div>");
+                $("#workspace").append("<div class='model-context-menu model'><div class='header'><span>" + $("#model_name").val() + "</span><div></div>");
+            });
+
+            $("#createNewPropertyButton").on("click", function () {
+                $(".model").append("<div class='property-context-menu property'><span>" + $("#property_name").val() + "</span></div>");
             });
         });
     });
@@ -148,46 +151,49 @@
 
 <div style="display: none">
     <div id="modelcreation">
-        <P class="title">Create new model</P>
-        <div class="item">
-            <span>Model key</span>
-            <input type="text"/>
-
-        </div>
-        <div class="item">
-            <span>Model name</span>
-            <input type="text"/>
-        </div>
-        <div class="item">
-            <span>Model description</span>
-            <textarea></textarea>
-        </div>
-        <div class="item" id="createNewModelButton">
-            <button>Create</button>
-        </div>
-    </div>
-</div>
-    <div style="display: none">
-        <div id="propertyCreation">
-            <P class="title">Create new property</P>
+     
+            <P class="title">Create new model</P>
             <div class="item">
-                <span>Model key</span>
+                <span>Key</span>
                 <input type="text" />
 
             </div>
             <div class="item">
-                <span>Model name</span>
-                <input type="text" />
+                <span>Name</span>
+                <input type="text" id="#model_name" />
             </div>
             <div class="item">
-                <span>Model description</span>
+                <span>Description</span>
                 <textarea></textarea>
             </div>
             <div class="item" id="createNewModelButton">
                 <button>Create</button>
             </div>
+       
+    </div>
+</div>
+    <div style="display: none">
+        <div id="propertyCreation">
+          
+                <P class="title">Create new property</P>
+                <div class="item">
+                    <span>Key</span>
+                    <input type="text" />
+
+                </div>
+                <div class="item">
+                    <span>Name</span>
+                    <input type="text" />
+                </div>
+                <div class="item">
+                    <span>Description</span>
+                    <textarea></textarea>
+                </div>
+                <div class="item" id="createNewPropertyButton">
+                    <button>Create</button>
+                </div>
+          
         </div>
     </div>
-    
 </body>
 </html>
