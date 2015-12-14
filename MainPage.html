@@ -1,13 +1,17 @@
 ﻿<!DOCTYPE html>
 
+<!-- Need this: http://stackoverflow.com/questions/536676/how-to-draw-a-line-between-draggable-and-droppable -->
+
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <script src="http://code.jquery.com/jquery.min.js"></script>
+    <script src="jquery-ui.min.js"></script>
     <script src="jquery.colorbox-min.js"></script>
     <script src="jquery.contextmenu.min.js"></script>
     <script src="jquery.ui.position.min.js"></script>
     <link href="http://getbootstrap.com/dist/css/bootstrap.css" rel="stylesheet" type="text/css"/>
     <link href="colorbox.css" rel="stylesheet" type="text/css"/>
+    <link href="jquery-ui.css" rel="stylesheet" type="text/css" />
     <script src="http://getbootstrap.com/dist/js/bootstrap.js"></script>
     <link href="http://getbootstrap.com/2.3.2/assets/css/bootstrap-responsive.css" rel="stylesheet" type="text/css" />
     <meta charset=utf-8 />
@@ -22,7 +26,7 @@
             background-color: #999999;
             padding: 20px;
         }
-      
+        
         #modelcreation {
             padding: 10px;
             font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -115,6 +119,15 @@
                             href: '#propertyCreation'
                         });
                     }
+                  
+                },
+
+                "Relate": {
+                    name: "New relation",
+                    icon: "new",
+                    callback: function (itemKey, options) {
+                       
+                    }
                 }
             }
         });
@@ -133,7 +146,8 @@
             });
 
             $("#createNewModelButton").on("click", function() {
-                $("#workspace").append("<div class='model-context-menu model'><div class='header'><span>" + $("#model_name").val() + "</span><div></div>");
+                $("#workspace").append("<div class='model-context-menu model' id='model'><div class='header'><span>" + $("#model_name").val() + "</span><div></div>");
+                $("#model").draggable();
             });
 
             $("#createNewPropertyButton").on("click", function () {
@@ -160,7 +174,7 @@
             </div>
             <div class="item">
                 <span>Name</span>
-                <input type="text" id="#model_name" />
+                <input type="text" id="model_name" />
             </div>
             <div class="item">
                 <span>Description</span>
@@ -183,7 +197,7 @@
                 </div>
                 <div class="item">
                     <span>Name</span>
-                    <input type="text" />
+                    <input type="text" id="property_name" />
                 </div>
                 <div class="item">
                     <span>Description</span>
