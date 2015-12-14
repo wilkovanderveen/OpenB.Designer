@@ -1,0 +1,123 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <script src="http://code.jquery.com/jquery.min.js"></script>
+    <script src="jquery.colorbox-min.js"></script>
+    <link href="http://getbootstrap.com/dist/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+    <link href="colorbox.css" rel="stylesheet" type="text/css"/>
+    <script src="http://getbootstrap.com/dist/js/bootstrap.js"></script>
+    <link href="http://getbootstrap.com/2.3.2/assets/css/bootstrap-responsive.css" rel="stylesheet" type="text/css" />
+    <meta charset=utf-8 />
+    <meta charset="utf-8"/>
+    <title></title>
+    <style>
+        #workspace {
+            width: 1024px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 768px;
+            background-color: #999999;
+            padding: 20px;
+        }
+        #contextMenu {
+            position: absolute;
+            display:none;
+        }
+        #modelcreation {
+            padding: 10px;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        }
+        .item {
+            height: 30px;
+        }
+        p.title {
+            text-align: center;
+            font-size: 20px;
+        }
+
+        .model {
+            border: 2px solid #101010;
+            width: 150px;
+            padding: 2px;
+            border-spacing: 2px;
+            background-color: #FFFFFF;
+            margin: 4px;
+        }
+
+        .header {
+            padding: 2px;
+            background-color: #DDDDDD;
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+<script>
+    $(function () {
+
+        var $contextMenu = $("#contextMenu");
+
+        $("body").on("contextmenu", "div", function (e) {
+            $contextMenu.css({
+                display: "block",
+                left: e.pageX,
+                top: e.pageY
+            });
+            return false;
+        });
+
+        $contextMenu.on("click", "a", function () {
+            $contextMenu.hide();
+        });
+
+        $(document).ready(function() {
+            $("#createNewModelMenuItem").colorbox({
+                inline: true, width: '600px', height: '275px'
+            });
+
+            $("#createNewModelButton").on("click", function() {
+                $("#workspace").append("<div class='model'><div class='header'><span>Model</span><div></div>");
+            })
+        });
+    });
+
+
+    
+</script>
+<div id="workspace">
+
+</div>
+
+  
+
+<div id="contextMenu" class="dropdown clearfix">
+    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu" style="display: block; position: static; margin-bottom: 5px;">
+        <li><a tabindex="-1" id="createNewModelMenuItem" href="#modelcreation">Create new Model</a></li>
+    </ul>
+</div>
+<div style="display: none">
+    <div id="modelcreation">
+        <P class="title">Create new model</P>
+        <div class="item">
+            <span>Model key</span>
+            <input type="text"/>
+
+        </div>
+        <div class="item">
+            <span>Model name</span>
+            <input type="text"/>
+        </div>
+        <div class="item">
+            <span>Model description</span>
+            <textarea></textarea>
+        </div>
+        <div class="item" id="createNewModelButton">
+            <button>Create</button>
+        </div>
+    </div>
+</div>
+    
+</body>
+</html>
