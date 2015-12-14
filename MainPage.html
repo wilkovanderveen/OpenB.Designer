@@ -4,6 +4,8 @@
 <head>
     <script src="http://code.jquery.com/jquery.min.js"></script>
     <script src="jquery.colorbox-min.js"></script>
+    <script src="jquery.contextmenu.min.js"></script>
+    <script src="jquery.ui.position.min.js"></script>
     <link href="http://getbootstrap.com/dist/css/bootstrap.css" rel="stylesheet" type="text/css"/>
     <link href="colorbox.css" rel="stylesheet" type="text/css"/>
     <script src="http://getbootstrap.com/dist/js/bootstrap.js"></script>
@@ -20,10 +22,7 @@
             background-color: #999999;
             padding: 20px;
         }
-        #contextMenu {
-            position: absolute;
-            display:none;
-        }
+      
         #modelcreation {
             padding: 10px;
             font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -51,25 +50,78 @@
             text-align: center;
         }
 
+        .context-menu-list {
+    position: absolute;
+    display: inline-block;
+    min-width: 180px;
+    max-width: 360px;
+    padding: 4px 0;
+    margin: 5px;
+    font-family: inherit;
+    font-size: inherit;
+    white-space: pre;
+    list-style-type: none;
+    background: #fff;
+    border: 1px solid #bebebe;
+    border-radius: 3px;
+    -webkit-box-shadow: 0 2px 5px rgba(0,0,0,.5);
+    box-shadow: 0 2px 5px rgba(0,0,0,.5);
+}
+
     </style>
 </head>
 <body>
 <script>
     $(function () {
 
-        var $contextMenu = $("#contextMenu");
-
-        $("body").on("contextmenu", "div", function (e) {
-            $contextMenu.css({
-                display: "block",
-                left: e.pageX,
-                top: e.pageY
-            });
-            return false;
+        $.contextMenu({
+            selector: '.workspace-context-menu',
+            appendTo: 'div#workspace',
+            callback: function(key, options) {
+                var m = "clicked: " + key;
+                window.console && console.log(m) || alert(m);
+            },
+            items: {
+                "Create": {
+                    name: "New model...",
+                    icon: "new",
+                    callback: function(itemKey, options) {
+                        $.colorbox({
+                            inline: true,
+                            width: '600px',
+                            height: '275px',
+                            href: '#modelcreation'
+                        });
+                    }
+                }
+            }
         });
 
-        $contextMenu.on("click", "a", function () {
-            $contextMenu.hide();
+        $.contextMenu({
+            selector: '.model-context-menu',
+            appendTo: 'div.model',
+            callback: function (key, options) {
+                var m = "clicked: " + key;
+                window.console && console.log(m) || alert(m);
+            },
+            items: {
+                "Create": {
+                    name: "New property...",
+                    icon: "new",
+                    callback: function (itemKey, options) {
+                        $.colorbox({
+                            inline: true,
+                            width: '600px',
+                            height: '275px',
+                            href: '#propertyCreation'
+                        });
+                    }
+                }
+            }
+        });
+
+        $('.workspace-context-menu').on('click', function (e) {
+            console.log('clicked', this);
         });
 
         $(document).ready(function() {
@@ -77,26 +129,23 @@
                 inline: true, width: '600px', height: '275px'
             });
 
+            $("#createNewPropertyItem").colorbox({
+                inline: true, width: '600px', height: '275px'
+            });
+
             $("#createNewModelButton").on("click", function() {
-                $("#workspace").append("<div class='model'><div class='header'><span>Model</span><div></div>");
-            })
+                $("#workspace").append("<div class='model-context-menu model'><div class='header'><span>Model</span><div></div>");
+            });
         });
     });
 
 
     
 </script>
-<div id="workspace">
-
+<div id="workspace" class="workspace-context-menu">
+    
 </div>
 
-  
-
-<div id="contextMenu" class="dropdown clearfix">
-    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu" style="display: block; position: static; margin-bottom: 5px;">
-        <li><a tabindex="-1" id="createNewModelMenuItem" href="#modelcreation">Create new Model</a></li>
-    </ul>
-</div>
 <div style="display: none">
     <div id="modelcreation">
         <P class="title">Create new model</P>
@@ -118,6 +167,27 @@
         </div>
     </div>
 </div>
+    <div style="display: none">
+        <div id="propertyCreation">
+            <P class="title">Create new property</P>
+            <div class="item">
+                <span>Model key</span>
+                <input type="text" />
+
+            </div>
+            <div class="item">
+                <span>Model name</span>
+                <input type="text" />
+            </div>
+            <div class="item">
+                <span>Model description</span>
+                <textarea></textarea>
+            </div>
+            <div class="item" id="createNewModelButton">
+                <button>Create</button>
+            </div>
+        </div>
+    </div>
     
 </body>
 </html>
